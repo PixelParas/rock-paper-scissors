@@ -8,6 +8,7 @@ import TextbookSolutions from "./pages/textbook-solutions-page"
 import AIHelp from "./pages/AI-help-page"
 import ProblemPage from "./pages/problem-page"
 import AskAProblemPage from "./pages/ask-a-problem-page"
+import ProblemsPage from "./pages/problems-page"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/quizzes" element={<CustomQuizzes />} />
         <Route path="/ask" element={<AskAProblemPage />} />
+        <Route path="/problems" element={<ProblemsPage />} />
         <Route path="/textbook" element={<TextbookSolutions />} />
         <Route path="/ai-help" element={<AIHelp />} />
         <Route path="/login" element={<AuthPage />} />

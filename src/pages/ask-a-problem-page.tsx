@@ -16,34 +16,23 @@ const AskAProblemPage = () => {
   };
 
   return (
-    <div className="p-6 h-screen flex justify-center items-center">
-      <Card className="w-full max-w-lg">
+    <div className="p-4 sm:p-6 h-screen flex justify-center items-center">
+      <Card className="w-full max-w-sm sm:max-w-lg">
         <CardHeader>
-          <CardTitle>Ask a Problem</CardTitle>
+          <CardTitle className="text-base sm:text-lg">Ask a Problem</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
-            <label className="text-gray-700 font-medium">Problem Statement</label>
+            <label className="text-sm sm:text-base text-gray-700 font-medium">
+              Problem Statement
+            </label>
             <Textarea
               placeholder="Describe your problem..."
               value={problem}
               onChange={(e) => setProblem(e.target.value)}
+              className="text-sm sm:text-base"
             />
-
-            <label className="text-gray-700 font-medium">Equation (LaTeX)</label>
-            <Input
-              placeholder="Enter equation in LaTeX format..."
-              value={equation}
-              onChange={(e) => setEquation(e.target.value)}
-            />
-            {equation && (
-              <div className="mt-2">
-                <p className="text-gray-500">Preview:</p>
-                <BlockMath math={equation} />
-              </div>
-            )}
-
-            <Button onClick={handleSubmit} className="mt-4">
+            <Button onClick={handleSubmit} className="mt-4 text-sm sm:text-base">
               Submit Problem
             </Button>
           </div>
