@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BlockMath, InlineMath } from "react-katex";
@@ -68,6 +69,13 @@ x = (-3 + i√3) / 2,
 x = (-3 - i√3) / 2.  `
 
 const ProblemPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [solutions, setSolutions] = useState<string[]>([]);
+
+  const handleAddSolution = (solution: string) => {
+    setSolutions((prevSolutions) => [...prevSolutions, solution]);
+    setIsModalOpen(false);
+  };
   return (
     <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 p-4 sm:p-6 h-screen">
       {/* Left Column (80%) */}
@@ -95,6 +103,20 @@ const ProblemPage = () => {
 
         {/* Solution Card */}
         <SolutionCard verified={true} content={what_is_integration_solution} />
+
+        {/* Dynamically Rendered Solution Cards */}
+        {solutions.map((solution, index) => (
+          <SolutionCard key={index} verified={false} content={solution} />
+        ))}
+
+        {/* Button to Add Solution */}
+        <Button
+          variant="outline"
+          className="mt-4"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Add Your Solution
+        </Button>
       </div>
 
       {/* Right Column (20%) */}
@@ -110,6 +132,36 @@ const ProblemPage = () => {
           Equation: <BlockMath math="4z + 10 = 30" />
         </Button>
       </div>
+
+      {/* Modal for Adding Solution */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 sm:w-1/2">
+            <h2 className="text-lg font-bold mb-4">Write Your Solution</h2>
+            <textarea
+              className="w-full border rounded-lg p-2 mb-4"
+              rows={5}
+              placeholder="Write your solution here..."
+              onChange={(e) => setSolutions([e.target.value])}
+            />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  const textarea = document.querySelector(
+                    "textarea"
+                  ) as HTMLTextAreaElement;
+                  handleAddSolution(textarea.value);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
